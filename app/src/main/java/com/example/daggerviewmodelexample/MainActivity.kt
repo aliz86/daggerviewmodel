@@ -10,14 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import com.example.daggerviewmodelexample.di.DaggerAppComponent
 import com.example.daggerviewmodelexample.ui.theme.DaggerViewModelExampleTheme
+import com.example.daggerviewmodelexample.viewmodel.UserViewModel
+import com.example.daggerviewmodelexample.viewmodel.UserViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
-    @Inject
     lateinit var userViewModel: UserViewModel
+
+    @Inject lateinit var userViewModelFactory: UserViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +30,12 @@ class MainActivity : ComponentActivity() {
         val appComponent = DaggerAppComponent.create()
         appComponent.inject(this)
 
+        userViewModel = ViewModelProvider(this, userViewModelFactory).get(UserViewModel::class.java)
+
         // Now you can use userViewModel
         userViewModel.users.observe(this) { users ->
             // Update your UI with the list of users
         }
-
 
         setContent {
             DaggerViewModelExampleTheme {

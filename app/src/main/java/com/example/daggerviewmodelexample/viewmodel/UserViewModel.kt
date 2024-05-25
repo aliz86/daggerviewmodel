@@ -1,4 +1,4 @@
-package com.example.daggerviewmodelexample
+package com.example.daggerviewmodelexample.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
